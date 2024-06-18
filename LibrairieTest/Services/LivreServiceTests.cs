@@ -5,7 +5,7 @@ using Librairie.Services;
 using Librairie.Services.Interfaces;
 using System;
 
-namespace LibrairieTest
+namespace LibrairieTest.Services
 {
     public class LivreServiceTests
     {
@@ -172,8 +172,8 @@ namespace LibrairieTest
 
             // Mock
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
-            serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => testClient); 
-            serviceBd.Setup(m => m.ObtenirLivre(livreGuid)).Returns(() => testLivre); 
+            serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => testClient);
+            serviceBd.Setup(m => m.ObtenirLivre(livreGuid)).Returns(() => testLivre);
             serviceBd.Setup(m => m.ModifierLivre(It.Is<Livre>(l => l.Id == livreGuid && l.Quantite == 1))); // Updated quantity is sent to DB
             var livreService = new LivreService(serviceBd.Object);
 
@@ -248,7 +248,7 @@ namespace LibrairieTest
             decimal dueAmount = livreService.AcheterLivre(clientGuid, livreGuid, 20);
 
             // Assert
-            Assert.That(dueAmount, Is.EqualTo(10)); 
+            Assert.That(dueAmount, Is.EqualTo(10));
         }
 
         [Test]

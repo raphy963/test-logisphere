@@ -4,7 +4,7 @@ using Librairie.Entities;
 using Librairie.Services;
 using Librairie.Services.Interfaces;
 
-namespace LibrairieTest
+namespace LibrairieTest.Services
 {
     public class ClientServiceTests
     {
@@ -53,7 +53,7 @@ namespace LibrairieTest
 
         [Test]
         [Category("User creation")]
-        public void A_Client_Is_Properly_Created() 
+        public void A_Client_Is_Properly_Created()
         {
             // Mock
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
