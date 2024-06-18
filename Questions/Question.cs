@@ -8,51 +8,40 @@ namespace Questions
     {
         public void Traiter(List<string> listeContenu)
         {
-            List<string> listeContenuValide = null;
-            string message = null;
-            bool estValide = true;
+            // Collaborateur 
+            List<string> listeContenuValide = new List<string>();
+            List<string> errors = new List<string>();
 
-            foreach (var contenu in listeContenu)
+            foreach(string contenu in listeContenu)
             {
-                if (estValide)
+                try
                 {
-                    estValide = Valider(contenu, message);
-                }              
-
-                if (estValide && !listeContenuValide.Contains(contenu))
-                {
-                    listeContenuValide.Add(contenu.Substring(0,10));
+                    Valider(contenu);
+                    listeContenuValide.Add(contenu);
                 }
+                catch (Exception ex)
+                {
+                    // Exception retournée de la validation.
+                    errors.Add(ex.Message);
+                    continue; // Erreur sauvegardé, on continue la boucle
+                }  
             }
 
-            if (!estValide)
-            {
-                throw new Exception(message);
-            }
+            // Ici : Faire quelque chose avec la liste "Errors" pour du error management approprié.
 
             if(listeContenuValide.Count > 0)
             {
-                listeContenuValide.ForEach(x => Collaborateur.AjouterContenuBD(x));
+                listeContenuValide.ForEach(c => Collaborateur.AjouterContenuBD(c));
             }
-
         }
 
-        private bool Valider(string contenu, string message)
+        private void Valider(string contenu)
         {
-            bool estValide = true;
             if (contenu == "")
-            {
-                estValide = false;
-                message = "Le contenu ne peut être vide";
-            }
+                throw new Exception("Le contenu ne peut être vide");
 
-            if (estValide && contenu.Length > 10)
-            {
-                estValide = false;
-                message = "Le contenu est trop long";
-            }
-
-            return estValide;
+            if (contenu.Length > 10)
+                throw new Exception("Le contenu est trop long");
         }
     }
 }
