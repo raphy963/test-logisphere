@@ -20,11 +20,11 @@ namespace LibrairieTest.Services
             // Execute
             Exception exNegativeNumber = Assert.Throws<ArgumentException>(() =>
             {
-                livreService.AcheterLivre(new Guid(), new Guid(), -2);
+                livreService.AcheterLivre(Guid.NewGuid(), Guid.NewGuid(), -2);
             });
             Exception exZero = Assert.Throws<ArgumentException>(() =>
             {
-                livreService.AcheterLivre(new Guid(), new Guid(), 0);
+                livreService.AcheterLivre(Guid.NewGuid(), Guid.NewGuid(), 0);
             });
 
             // Assert
@@ -36,8 +36,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Client_Exists_When_Buying()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
 
             // Mock
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
@@ -60,8 +60,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Livre_Exists_When_Buying()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
 
             // Mock
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
@@ -89,8 +89,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Livre_Has_Copies_In_Stock_When_Buying()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
 
             // Mock
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
@@ -122,8 +122,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Montant_Is_Equal_Or_Higher_Than_Livre_Price_When_Buying()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
 
             // Mock
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
@@ -156,8 +156,8 @@ namespace LibrairieTest.Services
         public void Checks_If_The_Book_Quantity_Updates_When_Buying()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Livre testLivre = new Livre()
             {
                 Id = livreGuid,
@@ -190,8 +190,8 @@ namespace LibrairieTest.Services
         public void Checks_If_The_Book_Is_Added_To_The_Client_List_When_Buying()
         {
             // Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Livre testLivre = new Livre()
             {
                 Id = livreGuid,
@@ -225,8 +225,8 @@ namespace LibrairieTest.Services
         public void Checks_If_The_Due_Amount_Is_Properly_Calculated_When_Buying()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
             serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => new Client()
             {
@@ -256,8 +256,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Client_Exists_When_Refunding()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
             serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => null); // Client not found
             var livreService = new LivreService(serviceBd.Object);
@@ -278,8 +278,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Livre_Exists_When_Refunding()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
             serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => new Client()
             {
@@ -305,8 +305,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Client_Has_The_Book_When_Refunding()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
             serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => new Client()
             {
@@ -338,8 +338,8 @@ namespace LibrairieTest.Services
         public void Checks_If_Book_Inventory_Is_Updated_When_Refunding()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Livre testLivre = new Livre()
             {
                 Id = livreGuid,
@@ -374,11 +374,18 @@ namespace LibrairieTest.Services
         public void Checks_If_Book_Is_Removed_From_Customer_When_Refunding()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
-            Livre testLivre = new Livre()
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuidOneCopy = Guid.NewGuid();
+            Guid livreGuidTwoCopy = Guid.NewGuid();
+            Livre testLivreOneCopy = new Livre()
             {
-                Id = livreGuid,
+                Id = livreGuidOneCopy,
+                Quantite = 2,
+                Prix = 10
+            };
+            Livre testLivreTwoCopy = new Livre()
+            {
+                Id = livreGuidTwoCopy,
                 Quantite = 2,
                 Prix = 10
             };
@@ -387,33 +394,37 @@ namespace LibrairieTest.Services
                 Id = clientGuid,
                 NomUtilisateur = "test",
                 ListeLivreAchete = new Dictionary<Guid, int> {
-                    { livreGuid, 1 }
+                    { livreGuidOneCopy, 1 },
+                    { livreGuidTwoCopy, 2 },
                 }
             };
 
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
             serviceBd.Setup(m => m.ObtenirClient(clientGuid)).Returns(() => testClient); // Client found with the book bought
-            serviceBd.Setup(m => m.ObtenirLivre(livreGuid)).Returns(() => testLivre); // Livre found
+            serviceBd.Setup(m => m.ObtenirLivre(livreGuidOneCopy)).Returns(() => testLivreOneCopy); // Livre with one copy owned by client found
+            serviceBd.Setup(m => m.ObtenirLivre(livreGuidTwoCopy)).Returns(() => testLivreTwoCopy); // Livre with one copy owned by client found
             serviceBd.Setup(m => m.ModifierLivre(It.IsAny<Livre>())); // Livre update does not matters
-            serviceBd.Setup(m => m.ModifierClient(It.Is<Client>(c => c.Id == clientGuid && c.ListeLivreAchete.ContainsKey(livreGuid) == false))); // Client update does not matters
+            serviceBd.Setup(m => m.ModifierClient(It.Is<Client>(c => c.Id == clientGuid)));
 
             var livreService = new LivreService(serviceBd.Object);
 
             // Execute
-            livreService.RembourserLivre(clientGuid, livreGuid);
+            livreService.RembourserLivre(clientGuid, livreGuidTwoCopy); // Two copy logic
+            livreService.RembourserLivre(clientGuid, livreGuidOneCopy); // One copy logic
 
             // Assert
             serviceBd.VerifyAll(); // Will verify all mocked setups
-            Assert.That(testClient.ListeLivreAchete, Does.Not.ContainKey(livreGuid));
+            Assert.That(testClient.ListeLivreAchete, Does.Not.ContainKey(livreGuidOneCopy));
+            Assert.That(testClient.ListeLivreAchete, Does.ContainKey(livreGuidTwoCopy).WithValue(1));
         }
 
         [Test]
         [Category("Book refund")]
-        public void Checks_If_The_RIght_Amount_To_Refund_Is_Given_When_Refunding()
+        public void Checks_If_The_Right_Amount_To_Refund_Is_Given_When_Refunding()
         {
             //Setup
-            Guid clientGuid = new Guid();
-            Guid livreGuid = new Guid();
+            Guid clientGuid = Guid.NewGuid();
+            Guid livreGuid = Guid.NewGuid();
             Livre testLivre = new Livre()
             {
                 Id = livreGuid,

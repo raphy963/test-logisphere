@@ -34,7 +34,7 @@ namespace LibrairieTest.Services
             Mock<IServiceBD> serviceBd = new Mock<IServiceBD>();
             serviceBd.Setup(m => m.ObtenirClient("test")).Returns(new Client()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 NomUtilisateur = "test"
 
             });
@@ -120,7 +120,7 @@ namespace LibrairieTest.Services
             serviceBd.Setup(m => m.ObtenirClient(It.IsAny<Guid>())).Returns(() => new Client()); // The client is found
             serviceBd.Setup(m => m.ObtenirClient("test")).Returns(() => new Client()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 NomUtilisateur = "test"
             }); // A client with the same username already exists
             ClientService clientService = new ClientService(serviceBd.Object);
